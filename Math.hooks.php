@@ -81,6 +81,7 @@ class MathHooks {
 	 */
 	static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'math', array( 'MathHooks', 'mathTagHook' ) );
+		$parser->setHook( 'dmath', array( 'MathHooks', 'dmathTagHook' ) );
 
 		return true;
 	}
@@ -93,6 +94,14 @@ class MathHooks {
 	 * @param Parser $parser
 	 * @return array
 	 */
+        static function dmathTagHook( $content, $attributes, $parser ) {
+		$attributes['display'] = 'block';
+		if ( array_key_exists( 'type', $attributes ) ) {
+			$tag = $attributes['type'];
+			$content = ' \\begin{'.$tag.'} '.$content.'\\end{'.$tag.'}';
+		}
+		return MathHooks::mathTagHook($content, $attributes, $parser);
+	}
 	static function mathTagHook( $content, $attributes, $parser ) {
 
 		if ( trim( $content ) === '' ) { // bug 8372

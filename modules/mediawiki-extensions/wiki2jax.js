@@ -3,6 +3,13 @@
  */
 /* global MathJax:true, $:true */
 
+// Wiki2Learn hack for supporting dmath
+MathJax.Hub.Config({
+  displayAlign: "center",
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+// End of hack
+
 MathJax.Extension.wiki2jax = {
   version: '1.0',
 
